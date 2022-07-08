@@ -1,0 +1,69 @@
+.view-student-heading{
+    font-size: 1.25rem;
+    font-weight: 500;
+    color:#EE2828;
+  }
+
+.student-table{
+  display: flex;
+  height: 45px;
+ 
+  
+}
+
+
+.student-table{
+  background-color: maroon;
+}
+
+
+
+.download-btn{
+    width: 180px !important;
+    margin-left:17px;
+    background-color: maroon;
+    color: whitesmoke;
+    text-align: left;
+    height:40px;
+}
+
+.input-div input, button{
+    border-radius: 3px !important;
+    background-color: rgb(228, 226, 226);
+    border: 1.5px solid grey;
+}
+
+.search-btn{
+    text-align: center;
+    width:150px;
+    background-color: maroon;
+    color: whitesmoke;
+    border-radius: 3px;
+}
+
+.table{
+    box-shadow: 0 0 17px 0 grey;
+  
+ 
+}
+
+tr:nth-child(even) {
+  background-color: rgb(255,233,233);
+}
+
+.table-row{
+  background-color: maroon !important;
+  color:whitesmoke;
+}
+
+.table-row th{
+  font-weight: 500 !important;
+}
+
+
+
+.input-div button{
+  width:12rem;
+  text-align: left;
+  color:grey;
+}

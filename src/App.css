@@ -1,38 +1,66 @@
-.App {
-  text-align: center;
+.title-row{
+  background-color: maroon;
+  height: 70px;
+  font-size: 1.75rem;
+  font-weight: 500;
+  color: #fff;
+  
+  
+}
+.form-detail-box{
+  box-shadow: 0 0 17px 0 grey;
+  height: 80vh;
+}
+.student-side-bar{
+  border-right: 2px solid rgb(31, 31, 31);
+  height: 80vh;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.input-div input{
+  margin: 0 0.25rem;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.side-button{
+  border: none !important;
+    outline: none !important;
+    border-style: hidden !important;
+    font-size: 1.5rem;
+    margin: 5px 0 0 8px;
+    background-color: white;
+    color: rgb(70, 66, 66);
+
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.student-dropdown-content {
+ 
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 210px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  
 }
 
-.App-link {
-  color: #61dafb;
+.student-dropdown-content a {
+  color: gray;
+  margin: 12px 16px;
+  text-decoration: none !important;
+  
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.side-button a:hover {background-color: #f1f1f1}
+
+
+
+
+ .student-dropdown-content a:hover{
+ color: red;
+  
 }
+
+.chevron{
+  border-bottom: 1px solid gray;
+}
+
+
+
+
