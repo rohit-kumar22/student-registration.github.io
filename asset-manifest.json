@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/student-registration.github.io/static/css/main.a584f05b.css",
-    "main.js": "/student-registration.github.io/static/js/main.e7d9e209.js",
+    "main.css": "/student-registration.github.io/static/css/main.71102916.css",
+    "main.js": "/student-registration.github.io/static/js/main.dd6dec87.js",
     "static/js/787.b2d041ac.chunk.js": "/student-registration.github.io/static/js/787.b2d041ac.chunk.js",
     "index.html": "/student-registration.github.io/index.html",
-    "main.a584f05b.css.map": "/student-registration.github.io/static/css/main.a584f05b.css.map",
-    "main.e7d9e209.js.map": "/student-registration.github.io/static/js/main.e7d9e209.js.map",
+    "main.71102916.css.map": "/student-registration.github.io/static/css/main.71102916.css.map",
+    "main.dd6dec87.js.map": "/student-registration.github.io/static/js/main.dd6dec87.js.map",
     "787.b2d041ac.chunk.js.map": "/student-registration.github.io/static/js/787.b2d041ac.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.a584f05b.css",
-    "static/js/main.e7d9e209.js"
+    "static/css/main.71102916.css",
+    "static/js/main.dd6dec87.js"
   ]
 }
