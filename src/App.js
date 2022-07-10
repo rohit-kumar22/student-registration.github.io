@@ -18,7 +18,9 @@ function App() {
     ADD: { name: "Add Student", icon: addUser },
   };
 
-  const [selectedItem, setSelectedItem] = useState(studentSideBarList.VIEW);
+  const [selectedItem, setSelectedItem] = useState(
+    studentSideBarList.VIEW.name
+  );
 
   return (
     <div className="App">
@@ -40,9 +42,7 @@ function App() {
                         </span>
                       </p>
                     </button>
-                    <div
-                      class="student-dropdown-content"
-                      style={{ fontSize: "1.5rem" }}>
+                    <div style={{ fontSize: "1.5rem" }}>
                       {Object.values(studentSideBarList).map((item) => (
                         <div onClick={() => setSelectedItem(item.name)}>
                           <p style={{ fontSize: "1.2rem", fontWeight: "400" }}>
@@ -57,8 +57,14 @@ function App() {
                 <div></div>
                 <div></div>
               </div>
-              {selectedItem === studentSideBarList.VIEW.name && <ViewStudent />}
-              {selectedItem === studentSideBarList.ADD.name && <AddStudent />}
+              {console.log(
+                "selectedItem",
+                selectedItem,
+                "studentSideBarList.VIEW.name",
+                studentSideBarList.VIEW.name
+              )}
+              {studentSideBarList.VIEW.name === selectedItem && <ViewStudent />}
+              {studentSideBarList.ADD.name === selectedItem && <AddStudent />}
             </div>
           </div>
         </div>

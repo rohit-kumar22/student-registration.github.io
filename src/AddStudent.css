@@ -1,0 +1,27 @@
+.add-student-heading{
+    font-size: 1.25rem;
+    font-weight: 500;
+    color:#EE2828;
+  }
+   
+ 
+
+  input{
+    
+    background-color: rgb(228, 227, 227);
+  }
+.input-content{
+  margin-left: 100px !important;
+  background-color: rgb(240, 237, 237);
+  width: 180px;
+  height: 35px;
+  border-radius: 3px;
+  color: gray;
+}
+
+.save-button{
+  
+  width:150px;
+  background-color: maroon;
+  color: whitesmoke;
+}

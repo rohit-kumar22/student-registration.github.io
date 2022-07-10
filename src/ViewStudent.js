@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import "./ViewStudent.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowDown } from "@fortawesome/free-solid-svg-icons";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import ReactHTMLTableToExcel from "react-html-table-to-excel";
 import { Table } from "reactstrap";
 
 export default function ViewStudent() {
@@ -41,29 +42,29 @@ export default function ViewStudent() {
       school: "Vinod Public School",
       class: 10,
       division: "B",
-      status: "Active",
+      status: "Invoice",
     },
     {
       id: 5,
-      name: "Rohit Kumar",
+      name: "Ankit Pal",
       age: 23,
-      school: "Modern Public School",
+      school: "Delhi Public School",
       class: 12,
-      division: "A",
+      division: "B",
       status: "Active",
     },
     {
       id: 6,
-      name: "Mohit Kumar",
+      name: "Bilal Aazam",
       age: 23,
       school: "Modern Public School",
       class: 11,
-      division: "A",
-      status: "Active",
+      division: "b",
+      status: "Invoice",
     },
     {
       id: 7,
-      name: "Udit Khan",
+      name: "Udit Singh",
       age: 12,
       school: "Delhi Public School",
       class: 2,
@@ -72,7 +73,7 @@ export default function ViewStudent() {
     },
     {
       id: 8,
-      name: "Shivam Rohela",
+      name: "Shivam Singh",
       age: 21,
       school: "Vinod Public School",
       class: 10,
@@ -81,6 +82,7 @@ export default function ViewStudent() {
     },
   ];
 
+  const download_btn = "Download Excel &emsp;&nbsp; ${downloadIcon}";
   const chevronIcon = <FontAwesomeIcon icon={faChevronDown} />;
   const downloadIcon = <FontAwesomeIcon icon={faArrowDown} />;
   return (
@@ -112,7 +114,7 @@ export default function ViewStudent() {
       </div>
       <div className="pt-0 mt-3  mb-0 row" style={{ height: "65%" }}>
         <div className="col-12">
-          <Table>
+          <Table id="table-to-xls">
             <thead>
               <tr width={100} className="table-row">
                 {" "}
@@ -150,9 +152,14 @@ export default function ViewStudent() {
         </div>
       </div>
       <div className="row">
-        <button className="download-btn mt-5">
-          Download Excel &emsp;&nbsp;{downloadIcon}
-        </button>
+        <ReactHTMLTableToExcel
+          id="test-table-xls-button"
+          className="download-btn mt-4"
+          table="table-to-xls"
+          filename="tablexls"
+          sheet="tablexls"
+          buttonText="Download Excel"
+        />
       </div>
     </div>
   );
