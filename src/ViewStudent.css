@@ -67,3 +67,12 @@ tr:nth-child(even) {
   text-align: left;
   color:grey;
 }
+
+.input-div select{
+  width:12rem;
+  text-align: left;
+  color:grey;
+  background-color: gainsboro;
+  border-radius: 3px;
+  height: 28px;
+}

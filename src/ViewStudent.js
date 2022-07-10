@@ -96,15 +96,35 @@ export default function ViewStudent() {
         <div className="col-12 input-div">
           <input type="text" placeholder="Name"></input>
           <input type="text" placeholder="Age" />
-          <button className="ms-1">
-            Class<span style={{ float: "right" }}>{chevronIcon}</span>
-          </button>
-          <button className="ms-2">
-            School <span style={{ float: "right" }}>{chevronIcon}</span>
-          </button>
-          <button className="ms-2">
-            Division <span style={{ float: "right" }}>{chevronIcon}</span>
-          </button>
+
+          <select className="ms-1">
+            {" "}
+            <option value="" disabled selected hidden>
+              Class
+            </option>
+            <option value="one">1</option>
+            <option value="two">2</option>
+            <option value="three">3</option>
+            <option value="four">4</option>
+            <option value="five">5</option>
+          </select>
+
+          <select className="ms-1">
+            <option value="" disabled selected hidden>
+              School
+            </option>
+            <option value="mps">Modern Public School</option>
+            <option value="dps">Delhi Public School</option>
+            <option value="pms">PMS Public School</option>
+          </select>
+          <select className="ms-1">
+            {" "}
+            <option value="" disabled selected hidden>
+              Division
+            </option>
+            <option value="mps">A</option>
+            <option value="dps">B</option>
+          </select>
           <button
             className="search-btn ms-4"
             style={{ color: "whitesmoke", width: "9rem", textAlign: "center" }}>

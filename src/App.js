@@ -44,8 +44,18 @@ function App() {
                     </button>
                     <div style={{ fontSize: "1.5rem" }}>
                       {Object.values(studentSideBarList).map((item) => (
-                        <div onClick={() => setSelectedItem(item.name)}>
-                          <p style={{ fontSize: "1.2rem", fontWeight: "400" }}>
+                        <div
+                          className="c-pointer"
+                          style={{ cursor: "pointer" }}
+                          onClick={() => setSelectedItem(item.name)}>
+                          <p
+                            style={{
+                              fontSize: "1.2rem",
+                              fontWeight: "400",
+                              color: `${
+                                selectedItem === item.name ? "red" : "black"
+                              }`,
+                            }}>
                             {item.icon}&emsp;{item.name}
                           </p>
                         </div>
