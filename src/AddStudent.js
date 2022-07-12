@@ -1,23 +1,56 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./AddStudent.css";
 import TextField from "@material-ui/core/TextField";
 
+const getDataFromLS = () => {
+  const studentInfo = localStorage.getItem("data");
+  console.log("studentInfo", studentInfo);
+  if (studentInfo !== "null") {
+    return JSON.parse(studentInfo);
+  } else {
+    return [];
+  }
+};
+
 export default function AddStudent() {
   console.log("AddStudent");
-  const [data, setData] = useState({});
+  const [data, setData] = useState(getDataFromLS());
+  const [id, setId] = useState("");
+  const [name, setName] = useState("");
+  const [age, setAge] = useState("");
+  const [dob, setDob] = useState("");
+  const [school, setSchool] = useState("");
+  const [classes, setClasses] = useState("");
+  const [division, setDivision] = useState("");
+  const [status, setStatus] = useState("");
 
-  const onInputChange = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
+  const handleAddDataSubmit = (e) => {
+    e.preventDefault();
+    const info = {
+      id,
+      name,
+      age,
+      dob,
+      school,
+      classes,
+      division,
+      status,
+    };
+    setData((prev) => [...prev, info]);
+    setId("");
+    setName("");
+    setAge("");
+    setDob("");
+    setSchool("");
+    setClasses("");
+    setDivision("");
+    setStatus("");
+  };
 
-    setData((prev) => ({ ...prev, [name]: value }));
-  };
-  const SaveData = () => {
-    Object.entries(data).forEach(([name, value]) => {
-      console.log("name", name, "value", value);
-      localStorage.setItem(name, value);
-    });
-  };
+  useEffect(() => {
+    localStorage.setItem("data", JSON.stringify(data));
+  }, [data]);
+
   return (
     <div className="col-sm-10">
       {console.log("data", data)}
@@ -25,135 +58,177 @@ export default function AddStudent() {
         <div className="col-12">
           <p className="mt-2 add-student-heading">Add Student</p>
         </div>
-        <div className="col-12">
-          <div className="row mt-5">
-            <div className="col-2">
-              <label>Full Name:</label>
+        <form autoComplete="off" onSubmit={handleAddDataSubmit}>
+          <div className="col-12">
+            <div className="row mt-4">
+              <div className="col-2">
+                <label>ID:</label>
+              </div>
+              <div className="col-5">
+                <input
+                  placeholder="Enter id"
+                  name="id"
+                  className="input-content"
+                  required="required"
+                  type="text"
+                  onChange={(e) => setId(e.target.value)}
+                  value={id}
+                />
+              </div>
             </div>
-            <div className="col-5">
-              <input
-                placeholder="Name"
-                name="full_name"
-                className="input-content"
-                type="text"
-                value={data["full_name"] ? data["full_name"] : ""}
-                onChange={(e) => onInputChange(e)}
-              />
+            <div className="row mt-4">
+              <div className="col-2">
+                <label>Full Name:</label>
+              </div>
+              <div className="col-5">
+                <input
+                  placeholder="Name"
+                  name="full_name"
+                  className="input-content"
+                  required
+                  type="text"
+                  onChange={(e) => setName(e.target.value)}
+                  value={name}
+                />
+              </div>
             </div>
-          </div>
-          <div className="row mt-4">
-            <div className="col-2">
-              {" "}
-              <label>Date Of Birth</label>
+            <div className="row mt-4">
+              <div className="col-2">
+                <label>Age:</label>
+              </div>
+              <div className="col-5">
+                <input
+                  placeholder="Age"
+                  name="age"
+                  className="input-content"
+                  required
+                  type="text"
+                  onChange={(e) => setAge(e.target.value)}
+                  value={age}
+                />
+              </div>
             </div>
-            <div className="col-5">
-              <TextField
-                className="input-content"
-                name="dob"
-                id="dob"
-                type="date"
-                defaultValue="DD-MM-YY"
-                value={data["dob"] ? data["dob"] : ""}
-                onChange={(e) => onInputChange(e)}
-              />
+            <div className="row mt-4">
+              <div className="col-2">
+                {" "}
+                <label>Date Of Birth</label>
+              </div>
+              <div className="col-5">
+                <TextField
+                  className="input-content"
+                  name="dob"
+                  id="dob"
+                  type="date"
+                  defaultValue="DD-MM-YY"
+                  onChange={(e) => setDob(e.target.value)}
+                  value={dob}
+                />
+              </div>
             </div>
-          </div>
-          <div className="row mt-4">
-            <div className="col-2">
-              <label>School</label>
+            <div className="row mt-4">
+              <div className="col-2">
+                <label>School</label>
+              </div>
+              <div className="col-5">
+                <select
+                  placeholder="Select"
+                  className="input-content"
+                  name="school"
+                  defaultValue="Select"
+                  onChange={(e) => setSchool(e.target.value)}
+                  value={school}>
+                  <option value="" disabled selected hidden>
+                    Select
+                  </option>
+                  <option value="Modern Public School">
+                    Modern Public School
+                  </option>
+                  <option value="Delhi Public School">
+                    Delhi Public School
+                  </option>
+                  <option value="PMS Public School">PMS Public School</option>
+                </select>
+              </div>
             </div>
-            <div className="col-5">
-              <select
-                placeholder="Select"
-                className="input-content"
-                name="school"
-                defaultValue="Select"
-                value={data["school"] ? data["school"] : ""}
-                onChange={(e) => onInputChange(e)}>
-                <option value="" disabled selected hidden>
-                  Select
-                </option>
-                <option value="mps">Modern Public School</option>
-                <option value="dps">Delhi Public School</option>
-                <option value="pms">PMS Public School</option>
-              </select>
+            <div className="row mt-4">
+              <div className="col-2">
+                <label>Class</label>
+              </div>
+              <div className="col-5">
+                <select
+                  className="input-content"
+                  name="class"
+                  onChange={(e) => setClasses(e.target.value)}
+                  value={classes}>
+                  <option value="" disabled selected hidden>
+                    Select
+                  </option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+              </div>
             </div>
-          </div>
-          <div className="row mt-4">
-            <div className="col-2">
-              <label>Class</label>
+            <div className="row mt-4">
+              <div className="col-2">
+                <label>Division</label>
+              </div>
+              <div className="col-5">
+                <select
+                  required
+                  className="input-content"
+                  name="division"
+                  onChange={(e) => setDivision(e.target.value)}
+                  value={division}>
+                  <option value="" disabled selected hidden>
+                    Select
+                  </option>
+                  <option value="A">A</option>
+                  <option value="B">B</option>
+                </select>
+              </div>
             </div>
-            <div className="col-5">
-              <select
-                className="input-content"
-                name="class"
-                value={data["class"] ? data["class"] : ""}
-                onChange={(e) => onInputChange(e)}>
-                <option value="" disabled selected hidden>
-                  Select
-                </option>
-                <option value="one">1</option>
-                <option value="two">2</option>
-                <option value="three">3</option>
-                <option value="four">4</option>
-                <option value="five">5</option>
-              </select>
-            </div>
-          </div>
-          <div className="row mt-4">
-            <div className="col-2">
-              <label>Division</label>
-            </div>
-            <div className="col-5">
-              <select
-                required
-                className="input-content"
-                name="division"
-                value={data["division"] ? data["division"] : ""}
-                onChange={(e) => onInputChange(e)}>
-                <option value="" disabled selected hidden>
-                  Select
-                </option>
-                <option value="a">A</option>
-                <option value="b">B</option>
-              </select>
-            </div>
-          </div>
 
-          <div className="row mt-4">
-            <div className="col-2">
-              <label>Status</label>
+            <div className="row mt-4">
+              <div className="col-2">
+                <label>Status</label>
+              </div>
+              <div className="col-5">
+                <input
+                  style={{ marginLeft: "100px" }}
+                  type="radio"
+                  name="status"
+                  value="Active"
+                  onChange={(e) => setStatus(e.target.value)}
+                  checked={status === "Active"}
+                />{" "}
+                Active
+                <input
+                  className="ms-4"
+                  type="radio"
+                  name="status"
+                  value="Invoice"
+                  onChange={(e) => setStatus(e.target.value)}
+                  checked={status === "Invoice"}
+                />{" "}
+                Invoice
+              </div>
             </div>
-            <div className="col-5">
-              <input
-                style={{ marginLeft: "100px" }}
-                type="radio"
-                value="active"
-                checked={data["status"] === "active"}
-                name="status"
-                onChange={(e) => onInputChange(e)}
-              />{" "}
-              Active
-              <input
-                className="ms-4"
-                type="radio"
-                value="invoice"
-                name="status"
-                checked={data["status"] === "invoice"}
-                onChange={(e) => onInputChange(e)}
-              />{" "}
-              Invoice
+            <div className="row mt-4">
+              <div className="col-2"></div>
+              <div className="col-5 ">
+                <button
+                  type="submit"
+                  className="input-content save-button"
+                  onClick={handleAddDataSubmit}>
+                  Save
+                </button>
+              </div>
             </div>
           </div>
-          <div className="row mt-4">
-            <div className="col-2"></div>
-            <div className="col-5 ">
-              <button className="input-content save-button" onClick={SaveData}>
-                Save{" "}
-              </button>
-            </div>
-          </div>
-        </div>
+        </form>
       </div>
     </div>
   );

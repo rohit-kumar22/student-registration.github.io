@@ -1,90 +1,82 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./ViewStudent.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowDown } from "@fortawesome/free-solid-svg-icons";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import ReactHTMLTableToExcel from "react-html-table-to-excel";
 import { Table } from "reactstrap";
+import EditableRow from "./EditableRow";
+import ReadRow from "./ReadRow";
 
 export default function ViewStudent() {
-  let data = [
-    {
-      id: 1,
-      name: "Rohit Kumar",
-      age: 23,
-      school: "Modern Public School",
-      class: 12,
-      division: "A",
-      status: "Active",
-    },
-    {
-      id: 2,
-      name: "Mohit Kumar",
-      age: 23,
-      school: "Modern Public School",
-      class: 11,
-      division: "A",
-      status: "Active",
-    },
-    {
-      id: 3,
-      name: "Udit Khan",
-      age: 12,
-      school: "Delhi Public School",
-      class: 2,
-      division: "A",
-      status: "Active",
-    },
-    {
-      id: 4,
-      name: "Shivam Rohela",
-      age: 21,
-      school: "Vinod Public School",
-      class: 10,
-      division: "B",
-      status: "Invoice",
-    },
-    {
-      id: 5,
-      name: "Ankit Pal",
-      age: 23,
-      school: "Delhi Public School",
-      class: 12,
-      division: "B",
-      status: "Active",
-    },
-    {
-      id: 6,
-      name: "Bilal Aazam",
-      age: 23,
-      school: "Modern Public School",
-      class: 11,
-      division: "b",
-      status: "Invoice",
-    },
-    {
-      id: 7,
-      name: "Udit Singh",
-      age: 12,
-      school: "Delhi Public School",
-      class: 2,
-      division: "A",
-      status: "Active",
-    },
-    {
-      id: 8,
-      name: "Shivam Singh",
-      age: 21,
-      school: "Vinod Public School",
-      class: 10,
-      division: "B",
-      status: "Active",
-    },
-  ];
+  const data = JSON.parse(localStorage.getItem("data"));
+  const [filteredData, setFilteredData] = useState(data);
+  const [editRowId, setEditRowId] = useState(1);
+  const [nameOptions, setNameOptions] = useState([]);
+  const [ageoptions, setAgeOptions] = useState([]);
+  const [schoolOptions, setSchoolOptions] = useState([]);
+  const [divisionOptions, setDivisionOptions] = useState([]);
+  const [classOptions, setClassesOptions] = useState([]);
+  const [name, setName] = useState("");
+  const [age, setAge] = useState("");
+  const [classes, setClasses] = useState("");
+  const [school, setSchool] = useState("");
+  const [division, setDivision] = useState("");
 
   const download_btn = "Download Excel &emsp;&nbsp; ${downloadIcon}";
   const chevronIcon = <FontAwesomeIcon icon={faChevronDown} />;
   const downloadIcon = <FontAwesomeIcon icon={faArrowDown} />;
+
+  function deleteData(rowId) {
+    const filterData = data.filter(({ id }) => id !== rowId);
+
+    setFilteredData(filterData);
+    localStorage.setItem("data", JSON.stringify(filteredData));
+
+    console.log(filterData);
+  }
+
+  useEffect(() => {
+    const classesnames = data.map(({ classes }) => classes);
+    console.log("classesnames", classesnames);
+    setClassesOptions(classesnames);
+    const names = data.map(({ name }) => name);
+    console.log("names", names);
+    setNameOptions(names);
+    const ages = data.map(({ age }) => age);
+    console.log("ages", ages);
+    setAgeOptions(ages);
+    const schoolnames = data.map(({ school }) => school);
+    console.log("schoolnames", schoolnames);
+    setSchoolOptions([...new Set(schoolnames)]);
+    const divisions = data.map(({ division }) => division);
+    console.log("divisions", divisions);
+    setDivisionOptions([...new Set(divisions)]);
+  }, []);
+
+  const search = () => {
+    const filteredInputs = {};
+
+    if (name) filteredInputs["name"] = name;
+    if (age) filteredInputs["age"] = age;
+    if (school) filteredInputs["school"] = school;
+    if (classes) filteredInputs["classes"] = classes;
+    if (division) filteredInputs["division"] = division;
+
+    console.log(filteredInputs);
+
+    const filterssss = data.filter(function (item) {
+      for (var key in filteredInputs) {
+        if (item[key] === undefined || item[key] != filteredInputs[key])
+          return false;
+      }
+      return true;
+    });
+    console.log("filterResp", filterssss);
+
+    setFilteredData(filterssss);
+  };
+
   return (
     <div className="col-sm-10">
       <div className="row">
@@ -94,39 +86,63 @@ export default function ViewStudent() {
       </div>
       <div className="row">
         <div className="col-12 input-div">
-          <input type="text" placeholder="Name"></input>
-          <input type="text" placeholder="Age" />
+          <input
+            type="text"
+            placeholder="Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}></input>
+          <input
+            type="text"
+            placeholder="Age"
+            value={age}
+            onChange={(e) => setAge(e.target.value)}
+          />
 
-          <select className="ms-1">
+          <select
+            className="ms-1"
+            value={classes}
+            onChange={(e) => setClasses(e.target.value)}>
             {" "}
             <option value="" disabled selected hidden>
               Class
             </option>
-            <option value="one">1</option>
-            <option value="two">2</option>
-            <option value="three">3</option>
-            <option value="four">4</option>
-            <option value="five">5</option>
+            {classOptions
+              .sort((a, b) => a - b)
+              .map((item) => (
+                <option value={item}>{item}</option>
+              ))}
           </select>
 
-          <select className="ms-1">
+          <select
+            className="ms-1"
+            value={school}
+            onChange={(e) => setSchool(e.target.value)}>
             <option value="" disabled selected hidden>
               School
             </option>
-            <option value="mps">Modern Public School</option>
-            <option value="dps">Delhi Public School</option>
-            <option value="pms">PMS Public School</option>
+            {schoolOptions
+              .sort((a, b) => a - b)
+              .map((item) => (
+                <option value={item}>{item}</option>
+              ))}
           </select>
-          <select className="ms-1">
+          <select
+            className="ms-1"
+            value={division}
+            onChange={(e) => setDivision(e.target.value)}>
             {" "}
             <option value="" disabled selected hidden>
               Division
             </option>
-            <option value="mps">A</option>
-            <option value="dps">B</option>
+            {divisionOptions
+              .sort((a, b) => a - b)
+              .map((item) => (
+                <option value={item}>{item}</option>
+              ))}
           </select>
           <button
             className="search-btn ms-4"
+            onClick={() => search()}
             style={{ color: "whitesmoke", width: "9rem", textAlign: "center" }}>
             Search
           </button>
@@ -134,41 +150,52 @@ export default function ViewStudent() {
       </div>
       <div className="pt-0 mt-3  mb-0 row" style={{ height: "65%" }}>
         <div className="col-12">
-          <Table id="table-to-xls">
-            <thead>
-              <tr width={100} className="table-row">
-                {" "}
-                <th>ID'V</th>
-                <th className="">Name</th>
-                <th className="">Age</th>
-                <th className="">School</th>
-                <th className="">Class </th>
-                <th className="">Division</th>
-                <th className="">Status</th>
-                <th></th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody width={100}>
-              {data.map((item, i) => (
-                <tr key={i}>
-                  <td>{item.id}</td>
-                  <td>{item.name}</td>
-                  <td>{item.age}</td>
-                  <td>{item.school}</td>
-                  <td>{item.class}</td>
-                  <td>{item.division}</td>
-                  <td>{item.status}</td>
-                  <td>
-                    <a href="#">Edit</a>
-                  </td>
-                  <td>
-                    <a href="#">Delete</a>
-                  </td>
+          <form>
+            <Table id="table-to-xls">
+              <thead>
+                <tr width={100} className="table-row">
+                  {" "}
+                  <th>ID'V</th>
+                  <th className="">Name</th>
+                  <th className="">Age</th>
+                  <th className="">School</th>
+                  <th className="">Class </th>
+                  <th className="">Division</th>
+                  <th className="">Status</th>
+                  <th></th>
+                  <th></th>
                 </tr>
-              ))}
-            </tbody>
-          </Table>
+              </thead>
+              <tbody width={100}>
+                {filteredData?.map((item, i) => (
+                  <tr key={i}>
+                    <td>{item.id}</td>
+                    <td>{item.name}</td>
+                    <td>{item.age}</td>
+                    <td>{item.school}</td>
+                    <td>{item.classes}</td>
+                    <td>{item.division}</td>
+                    <td>{item.status}</td>
+                    <td>
+                      <a href="#">Edit</a>
+                    </td>
+                    <td>
+                      <a href="#" onClick={() => deleteData(item.id)}>
+                        Delete
+                      </a>
+                    </td>
+                  </tr>
+                  /* <>
+                    {editRowId === item.id ? (
+                      <EditableRow />
+                    ) : (
+                      <ReadRow item={(item, i)} deleteData={deleteData} />
+                    )}
+                  </> */
+                ))}
+              </tbody>
+            </Table>
+          </form>
         </div>
       </div>
       <div className="row">

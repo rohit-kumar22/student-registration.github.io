@@ -1,0 +1,12 @@
+td{
+    width:60px !important;
+}
+.input-content1{
+    width: 80px !important; 
+    margin: 0px !important;
+    background-color: rgb(240, 237, 237);
+  height: 30px;
+  border-radius: 3px;
+  border-color: gray;
+  color: gray;
+}
