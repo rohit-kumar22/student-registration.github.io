@@ -29,7 +29,7 @@ export default function ViewStudent({ onEditClick }) {
   const downloadIcon = <FontAwesomeIcon icon={faArrowDown} />;
 
   function deleteData(rowId) {
-    const filterData = data.filter(({ id }) => id !== rowId);
+    const filterData = data?.filter(({ id }) => id !== rowId);
 
     setFilteredData(filterData);
     localStorage.setItem("data", JSON.stringify(filterData));
@@ -42,15 +42,15 @@ export default function ViewStudent({ onEditClick }) {
   }
 
   useEffect(() => {
-    const classesnames = data.map(({ classes }) => classes);
+    const classesnames = data?.map(({ classes }) => classes);
     setClassesOptions([...new Set(classesnames)]);
-    const names = data.map(({ name }) => name);
+    const names = data?.map(({ name }) => name);
     setNameOptions(names);
-    const ages = data.map(({ age }) => age);
+    const ages = data?.map(({ age }) => age);
     setAgeOptions(ages);
-    const schoolnames = data.map(({ school }) => school);
+    const schoolnames = data?.map(({ school }) => school);
     setSchoolOptions([...new Set(schoolnames)]);
-    const divisions = data.map(({ division }) => division);
+    const divisions = data?.map(({ division }) => division);
     setDivisionOptions([...new Set(divisions)]);
   }, []);
 
@@ -65,7 +65,7 @@ export default function ViewStudent({ onEditClick }) {
 
     console.log(filteredInputs);
 
-    const filterssss = data.filter(function (item) {
+    const filterssss = data?.filter(function (item) {
       for (var key in filteredInputs) {
         if (item[key] === undefined || item[key] != filteredInputs[key])
           return false;
