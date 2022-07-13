@@ -12,13 +12,13 @@ const getDataFromLS = () => {
   }
 };
 
-export default function AddStudent() {
+export default function AddStudent({ editItem, isInfoUpdated }) {
+  // console.log("id", studentId);
   console.log("AddStudent");
   const [data, setData] = useState(getDataFromLS());
   const [id, setId] = useState("");
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
-  const [dob, setDob] = useState("");
   const [school, setSchool] = useState("");
   const [classes, setClasses] = useState("");
   const [division, setDivision] = useState("");
@@ -30,22 +30,68 @@ export default function AddStudent() {
       id,
       name,
       age,
-      dob,
+      school,
+      classes,
+      division,
+      status,
+    };
+
+    setData((prev) => [...prev, info]);
+    setId("");
+    setName("");
+    setAge("");
+    setSchool("");
+    setClasses("");
+    setDivision("");
+    setStatus("");
+  };
+
+  const handleUpdateDataStudent = (e) => {
+    e.preventDefault();
+
+    const oldInfo = data.filter((item) => item.id !== id);
+    setData(oldInfo);
+    const info = {
+      id,
+      name,
+      age,
       school,
       classes,
       division,
       status,
     };
     setData((prev) => [...prev, info]);
+
     setId("");
     setName("");
     setAge("");
-    setDob("");
     setSchool("");
     setClasses("");
     setDivision("");
     setStatus("");
+
+    isInfoUpdated(true);
   };
+
+  useEffect(() => {
+    if (editItem) {
+      setId(editItem.id);
+      setName(editItem.name);
+      setAge(editItem.age);
+      setSchool(editItem.school);
+      setClasses(editItem.classes);
+      setDivision(editItem.division);
+      setStatus(editItem.status);
+    } else {
+      setId("");
+      setName("");
+      setAge("");
+      setSchool("");
+      setClasses("");
+      setDivision("");
+      setStatus("");
+    }
+  }, [editItem]);
 
   useEffect(() => {
     localStorage.setItem("data", JSON.stringify(data));
@@ -56,9 +102,11 @@ export default function AddStudent() {
       {console.log("data", data)}
       <div className="row ">
         <div className="col-12">
-          <p className="mt-2 add-student-heading">Add Student</p>
+          <p className="mt-2 add-student-heading">
+            {editItem ? "Update" : "Add"} Student
+          </p>
         </div>
-        <form autoComplete="off" onSubmit={handleAddDataSubmit}>
+        <form autoComplete="off" onSubmit={() => handleAddDataSubmit}>
           <div className="col-12">
             <div className="row mt-4">
               <div className="col-2">
@@ -108,23 +156,7 @@ export default function AddStudent() {
                 />
               </div>
             </div>
-            <div className="row mt-4">
-              <div className="col-2">
-                {" "}
-                <label>Date Of Birth</label>
-              </div>
-              <div className="col-5">
-                <TextField
-                  className="input-content"
-                  name="dob"
-                  id="dob"
-                  type="date"
-                  defaultValue="DD-MM-YY"
-                  onChange={(e) => setDob(e.target.value)}
-                  value={dob}
-                />
-              </div>
-            </div>
+
             <div className="row mt-4">
               <div className="col-2">
                 <label>School</label>
@@ -222,7 +254,9 @@ export default function AddStudent() {
                 <button
                   type="submit"
                   className="input-content save-button"
-                  onClick={handleAddDataSubmit}>
+                  onClick={
+                    editItem ? handleUpdateDataStudent : handleAddDataSubmit
+                  }>
                   Save
                 </button>
               </div>

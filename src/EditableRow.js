@@ -1,7 +1,7 @@
 import React from "react";
 import "./EditableRow.css";
 
-export default function EditableRow() {
+export default function EditableRow(studentId) {
   return (
     <tr>
       <td>

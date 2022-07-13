@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import AddStudent from "./AddStudent";
 import "./App.css";
 import ViewStudent from "./ViewStudent";
@@ -6,12 +6,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { faUserGroup } from "@fortawesome/free-solid-svg-icons";
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+
+import SignUp from "./SignUp";
 
 function App() {
   const chevronArrow = <FontAwesomeIcon icon={faChevronDown} />;
   const groupIcon = <FontAwesomeIcon icon={faUserGroup} />;
   const addUser = <FontAwesomeIcon icon={faUserPlus} />;
+
+  const [editItem, setEditItem] = useState();
 
   const studentSideBarList = {
     VIEW: { name: "View Student", icon: groupIcon },
@@ -21,6 +24,16 @@ function App() {
   const [selectedItem, setSelectedItem] = useState(
     studentSideBarList.VIEW.name
   );
+
+  const selectedIdForEdit = (details) => {
+    setSelectedItem(studentSideBarList.ADD.name);
+    setEditItem(details);
+    console.log("id", details);
+  };
+
+  const isInfoUpdated = (Updated) => {
+    // setSelectedItem(studentSideBarList.VIEW.name);
+  };
 
   return (
     <div className="App">
@@ -47,7 +60,10 @@ function App() {
                         <div
                           className="c-pointer"
                           style={{ cursor: "pointer" }}
-                          onClick={() => setSelectedItem(item.name)}>
+                          onClick={() => {
+                            setEditItem();
+                            setSelectedItem(item.name);
+                          }}>
                           <p
                             style={{
                               fontSize: "1.2rem",
@@ -73,8 +89,13 @@ function App() {
                 "studentSideBarList.VIEW.name",
                 studentSideBarList.VIEW.name
               )}
-              {studentSideBarList.VIEW.name === selectedItem && <ViewStudent />}
-              {studentSideBarList.ADD.name === selectedItem && <AddStudent />}
+              {studentSideBarList.VIEW.name === selectedItem && (
+                <ViewStudent onEditClick={selectedIdForEdit} />
+              )}
+              {studentSideBarList.ADD.name === selectedItem && (
+                <AddStudent editItem={editItem} isInfoUpdated={isInfoUpdated} />
+              )}
+              {/* {editItem && <AddStudent editItem={editItem} />} */}
             </div>
           </div>
         </div>

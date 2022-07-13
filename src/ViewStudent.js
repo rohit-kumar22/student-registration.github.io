@@ -7,8 +7,9 @@ import ReactHTMLTableToExcel from "react-html-table-to-excel";
 import { Table } from "reactstrap";
 import EditableRow from "./EditableRow";
 import ReadRow from "./ReadRow";
+import AddStudent from "./AddStudent";
 
-export default function ViewStudent() {
+export default function ViewStudent({ onEditClick }) {
   const data = JSON.parse(localStorage.getItem("data"));
   const [filteredData, setFilteredData] = useState(data);
   const [editRowId, setEditRowId] = useState(1);
@@ -31,26 +32,25 @@ export default function ViewStudent() {
     const filterData = data.filter(({ id }) => id !== rowId);
 
     setFilteredData(filterData);
-    localStorage.setItem("data", JSON.stringify(filteredData));
+    localStorage.setItem("data", JSON.stringify(filterData));
 
     console.log(filterData);
   }
 
+  function editData(info) {
+    onEditClick(info);
+  }
+
   useEffect(() => {
     const classesnames = data.map(({ classes }) => classes);
-    console.log("classesnames", classesnames);
-    setClassesOptions(classesnames);
+    setClassesOptions([...new Set(classesnames)]);
     const names = data.map(({ name }) => name);
-    console.log("names", names);
     setNameOptions(names);
     const ages = data.map(({ age }) => age);
-    console.log("ages", ages);
     setAgeOptions(ages);
     const schoolnames = data.map(({ school }) => school);
-    console.log("schoolnames", schoolnames);
     setSchoolOptions([...new Set(schoolnames)]);
     const divisions = data.map(({ division }) => division);
-    console.log("divisions", divisions);
     setDivisionOptions([...new Set(divisions)]);
   }, []);
 
@@ -70,6 +70,7 @@ export default function ViewStudent() {
         if (item[key] === undefined || item[key] != filteredInputs[key])
           return false;
       }
+
       return true;
     });
     console.log("filterResp", filterssss);
@@ -107,7 +108,9 @@ export default function ViewStudent() {
               Class
             </option>
             {classOptions
-              .sort((a, b) => a - b)
+              .sort((a, b) => {
+                return a - b;
+              })
               .map((item) => (
                 <option value={item}>{item}</option>
               ))}
@@ -158,7 +161,7 @@ export default function ViewStudent() {
                   <th>ID'V</th>
                   <th className="">Name</th>
                   <th className="">Age</th>
-                  <th className="">School</th>
+                  <th className=" pe-5">School</th>
                   <th className="">Class </th>
                   <th className="">Division</th>
                   <th className="">Status</th>
@@ -177,7 +180,9 @@ export default function ViewStudent() {
                     <td>{item.division}</td>
                     <td>{item.status}</td>
                     <td>
-                      <a href="#">Edit</a>
+                      <a href="#" onClick={() => onEditClick(item)}>
+                        Edit
+                      </a>
                     </td>
                     <td>
                       <a href="#" onClick={() => deleteData(item.id)}>
@@ -185,13 +190,6 @@ export default function ViewStudent() {
                       </a>
                     </td>
                   </tr>
-                  /* <>
-                    {editRowId === item.id ? (
-                      <EditableRow />
-                    ) : (
-                      <ReadRow item={(item, i)} deleteData={deleteData} />
-                    )}
-                  </> */
                 ))}
               </tbody>
             </Table>
